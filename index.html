@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    rel="shortcut icon"
+    href="https://easycss.github.io/favicon/favicon.png"
+    type="image/x-icon"
+  />
+  <link rel='stylesheet' href='https://easycss.github.io/easyform/form-all.css' />
+  <link rel='stylesheet' href='https://easycss.github.io/easyform/buttons.css'>
+  <link rel='stylesheet' href='https://easycss.github.io/easyreset/index.css' />
+  <style>
+    body{
+      padding: 12px;
+      font-family: sans-serif;
+    }
+    input, button{
+      margin: 0 0 5px;
+    }
+    input:focus {
+      outline: none;
+    }
+    input:focus::placeholder {
+      color: transparent;
+    }
+    #root{
+      display: flex;
+    }
+    .group{
+      background-color: yellow;
+      width: fit-content;
+      padding: 24px;
+      margin: 4px;
+    }
+    .title, .content{
+      font-size: 2rem;
+    }
+  </style>
+  <title>localStorage</title>
+</head>
+<body>
+
+
+<input id="title" type="text" placeholder="enter title">
+<input id="content" type="text" placeholder="enter content">
+
+<button class="btn btn-green" id="add">Add</button>
+
+<!--  -->
+<!--  -->
+<div id="root"></div>
+<!--  -->
+<!--  -->
+
+</body>
+</html>
+
+<script>
+function createElementWithClass(tagName, classes) {
+  const el = document.createElement(tagName);
+  el.setAttribute('class', classes);
+
+  return el;
+}
+function createItem(title, content, id) {
+  const elGroup = createElementWithClass('div', 'group');
+
+  const elTitle = createElementWithClass('p', 'title');
+  const elContent = createElementWithClass('p', 'content');
+  const elDeleteBtn = createElementWithClass('button', 'btn btn-red');
+
+  elTitle.textContent = title;
+  elContent.textContent = content;
+
+  elDeleteBtn.textContent = "DELETE";
+  elDeleteBtn.setAttribute('id', id);
+  elDeleteBtn.onclick = () => {
+    // localStorage.clear()
+    localStorage.removeItem(title)
+    location.reload();
+  }
+
+
+  elGroup.append(elTitle, elContent, elDeleteBtn);
+  return elGroup;
+}
+
+// <button class="btn btn-red" id="deleteLocalStorage">DELETE</button>
+
+const root = document.getElementById('root');
+
+// input els
+const title = document.getElementById('title');
+const content = document.getElementById('content');
+
+const add = document.getElementById('add');
+
+// const deleteLocalStorage = document.getElementById('deleteLocalStorage');
+
+
+add.onclick = () => {
+  let key = title.value;
+  let value = content.value;
+
+  if(key && value){
+    localStorage.setItem(key, value);
+    location.reload();
+  }
+
+  title.value = "";
+  content.value = "";
+}
+
+for(let i = 0; i < localStorage.length; i++){
+  const title = localStorage.key(i);
+  const content = localStorage.getItem(title);
+  const id = i;
+ 
+  root.appendChild(createItem(title, content, id))
+
+}
+
+
+</script>
+
+
