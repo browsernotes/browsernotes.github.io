@@ -42,7 +42,9 @@
   <title>localStorage</title>
 </head>
 <body>
-
+<div>
+<button onclick="deleteAll()" class="btn btn-red">DELET ALL</button>
+</div>
 
 <input id="title" type="text" placeholder="enter title">
 <input id="content" type="text" placeholder="enter content">
@@ -78,17 +80,17 @@ function createItem(title, content, id) {
   elDeleteBtn.textContent = "DELETE";
   elDeleteBtn.setAttribute('id', id);
   elDeleteBtn.onclick = () => {
-    // localStorage.clear()
-    localStorage.removeItem(title)
-    location.reload();
+    const deleteNote = confirm("Are you sure you want to DELETE this note?");
+    if(deleteNote){
+      localStorage.removeItem(id)
+      location.reload();
+    }
   }
 
 
   elGroup.append(elTitle, elContent, elDeleteBtn);
   return elGroup;
 }
-
-// <button class="btn btn-red" id="deleteLocalStorage">DELETE</button>
 
 const root = document.getElementById('root');
 
@@ -98,15 +100,18 @@ const content = document.getElementById('content');
 
 const add = document.getElementById('add');
 
-// const deleteLocalStorage = document.getElementById('deleteLocalStorage');
-
-
 add.onclick = () => {
   let key = title.value;
   let value = content.value;
 
-  if(key && value){
-    localStorage.setItem(key, value);
+  const obj = {
+    title: key,
+    content: value
+  }
+  let id = Math.random(0,1);
+
+  if(key){
+    localStorage.setItem(id, JSON.stringify(obj));
     location.reload();
   }
 
@@ -115,14 +120,23 @@ add.onclick = () => {
 }
 
 for(let i = 0; i < localStorage.length; i++){
-  const title = localStorage.key(i);
-  const content = localStorage.getItem(title);
-  const id = i;
- 
+  const id = localStorage.key(i);
+  const note = JSON.parse(localStorage.getItem(id));
+  const title = note.title;
+  const content = note.content;
+
   root.appendChild(createItem(title, content, id))
 
 }
 
+
+function deleteAll(){
+  const deleteAllNotes = confirm("Are you sure you want to DELETE ALL NOTES?");
+  if(deleteAllNotes){
+    localStorage.clear(); 
+    location.reload();
+  }
+}
 
 </script>
 
