@@ -13,6 +13,8 @@ function handleToggleForm(){
   
   show = !show;
   toggleForm.innerText = buttonStates[toggleForm.innerText];
+
+  document.querySelector("input").focus()
 }
 
 function encodeHTML(s){
@@ -45,7 +47,6 @@ function createItem(title, content, id) {
     }
   }
 
-
   elGroup.append(elTitle, elContent, elDeleteBtn);
   return elGroup;
 }
@@ -69,7 +70,7 @@ add.onclick = () => {
   let timestamp = d.getTime();
   // let id = Math.random(0,1);
 
-  if(obj){
+  if(obj.title) {
     localStorage.setItem(JSON.stringify(timestamp), JSON.stringify(obj));
     location.reload();
   }
@@ -99,3 +100,42 @@ function deleteAll(){
     location.reload();
   }
 }
+
+let size;
+function changeFontSize(delta) {
+  var tags = document.querySelectorAll('p');
+  for (i = 0; i < tags.length; i++) {
+    size = tags[i].style.fontSize
+    increaseFontSizeBtn.disabled = false;
+    decreaseFontSizeBtn.disabled = false;
+    if (size) {
+      size = parseInt(tags[i].style.fontSize.replace("px", ""));
+    } else {
+      size = 48;
+    } if (size > 53) {
+      increaseFontSizeBtn.disabled = true;
+      size = 52;
+    } else if(size < 7){
+      decreaseFontSizeBtn.disabled = true;
+      size = 8;
+    } else{
+      size += delta;
+    }
+    tags[i].style.fontSize = size + "px"
+  }
+    // console.log(size)
+}
+
+function increaseFontSize() {
+  changeFontSize(5);
+}
+
+function decreaseFontSize() {
+  changeFontSize(-5);
+}
+
+const increaseFontSizeBtn = document.getElementById('increase-font-size')
+increaseFontSizeBtn.onclick = increaseFontSize;
+
+const decreaseFontSizeBtn = document.getElementById('decrease-font-size')
+decreaseFontSizeBtn.onclick = decreaseFontSize;

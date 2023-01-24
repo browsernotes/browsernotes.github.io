@@ -6,26 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="shortcut icon"
-    href="https://easycss.github.io/favicon/favicon.png"
+    href="favicon.png"
     type="image/x-icon"
   />
   <link rel='stylesheet' href='https://easycss.github.io/easyform/form-all.css' />
   <link rel='stylesheet' href='https://easycss.github.io/easyform/buttons.css'>
   <link rel='stylesheet' href='style.css' />
-  <title>localStorage</title>
+  <title>Notes</title>
 </head>
 <body>
 <div class="container">
 
-
-
 <header>
-<button onclick="deleteAll()" class="btn btn-red">DELETE ALL</button>
+<div>
+<button id="increase-font-size" class="btn btn-white-border">A+</button>
+<button id="decrease-font-size" class="btn btn-white-border">A-</button>
+</div>
+
 <button onclick="handleToggleForm()" id="toggleForm" class="btn btn-dark">ADD NOTE</button>
+
+<button onclick="deleteAll()" class="btn btn-red">DELETE ALL</button>
+
 </header>
 
 <form>
-  <input id="title" type="text" placeholder="Enter Title">
+  <input id="title" type="text" placeholder="Enter Title" required autofocus>
   <textarea id="content" type="text" placeholder="Enter Content"></textarea>
   
   <button class="btn btn-green" id="add">Add</button>
