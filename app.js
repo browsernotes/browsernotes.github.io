@@ -111,7 +111,7 @@ function changeFontSize(delta) {
     if (size) {
       size = parseInt(tags[i].style.fontSize.replace("px", ""));
     } else {
-      size = 48;
+      size = 48; // onload size
     } if (size > 53) {
       increaseFontSizeBtn.disabled = true;
       size = 52;
@@ -123,15 +123,15 @@ function changeFontSize(delta) {
     }
     tags[i].style.fontSize = size + "px"
   }
-    // console.log(size)
+    console.log(size)
 }
 
 function increaseFontSize() {
-  changeFontSize(5);
+  changeFontSize(4);
 }
 
 function decreaseFontSize() {
-  changeFontSize(-5);
+  changeFontSize(-4);
 }
 
 const increaseFontSizeBtn = document.getElementById('increase-font-size')
