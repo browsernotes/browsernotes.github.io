@@ -123,7 +123,7 @@ function changeFontSize(delta) {
     }
     tags[i].style.fontSize = size + "px"
   }
-    console.log(size)
+    // console.log(size)
 }
 
 function increaseFontSize() {
