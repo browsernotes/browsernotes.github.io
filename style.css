@@ -8,7 +8,7 @@
 body{
   overflow-x: hidden;
   background-color: #f7f7f7;
-  padding: 12px;
+  padding: 5px 0 12px;
   font-family: "Open Sans", sans-serif;
 }
 .container{
@@ -24,7 +24,25 @@ header, form{
 header{
   display: flex;
   gap: 4px;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+.header{
+  display: flex;
+  justify-content: left;
+  gap: 4px;
+}
+@media (max-width: 768px){
+  .font-adjust{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+button#increase-font-size,
+button#decrease-font-size{
+  /* min-width: fit-content!important; */
+  min-width: 80px!important;
+  /* padding: 9px 12px!important; */
 }
 form{
   display: none;
@@ -36,23 +54,40 @@ form{
 input, textarea{
   padding: 10px; 
 }
+button#add{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 button{
   cursor: pointer;
+}
+/* fix IOS rounding issue */
+textarea,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+input[type="search"] {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 button:disabled, button[disabled]{
   background-color: red;
 }
 input, button{
   margin: 0 0 4px;
+  border: 0px solid transparent;
 }
 input:focus {
   outline: none;
 }
 textarea::placeholder, input::placeholder, textarea:focus::placeholder, input:focus::placeholder {
   color: #ccc;
+  font-family: sans-serif;
 }
 textarea {
   height: 200px;
+  border: 0px solid transparent;
 }
 #root{
   display: flex;
