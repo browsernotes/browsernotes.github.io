@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body{
+  overflow-x: hidden;
+  background-color: #f7f7f7;
+  padding: 12px;
+  font-family: "Open Sans", sans-serif;
+}
+.container{
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto 1%;
+}
+header{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 5px;
+}
+form{
+  display: none;
+  flex-direction: column;
+  width: 98.5%;
+  margin: 0 auto;
+}
+.toggleForm{
+  display: flex;
+}
+input, textarea{
+  padding: 10px; 
+}
+input, button{
+  margin: 0 0 5px;
+}
+input:focus {
+  outline: none;
+}
+textarea:focus::placeholder, input:focus::placeholder {
+  color: transparent;
+}
+textarea {
+  height: 200px;
+}
+#root{
+  display: flex;
+  flex-wrap: wrap;
+}
+.group{
+  position: relative;
+  background-color: yellow;
+  width: fit-content;
+  padding: 24px;
+  margin: 4px;
+  border-radius: 10px; /* 40px */
+}
+.title, .content{
+  font-size: 3rem;
+  line-height: 3.7rem;
+}
+.content{
+  margin-bottom: 20px;
+}
+.note-delete{
+  position: absolute;
+  bottom: -5px;
+  right: 0;
+  min-width: fit-content!important;
+  padding: 4px!important;
+  border-radius: 5px;
+  font-size: .7rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: #f7f7f7
+}
+

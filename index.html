@@ -11,45 +11,26 @@
   />
   <link rel='stylesheet' href='https://easycss.github.io/easyform/form-all.css' />
   <link rel='stylesheet' href='https://easycss.github.io/easyform/buttons.css'>
-  <link rel='stylesheet' href='https://easycss.github.io/easyreset/index.css' />
-  <style>
-    body{
-      padding: 12px;
-      font-family: sans-serif;
-    }
-    input, button{
-      margin: 0 0 5px;
-    }
-    input:focus {
-      outline: none;
-    }
-    input:focus::placeholder {
-      color: transparent;
-    }
-    #root{
-      display: flex;
-    }
-    .group{
-      background-color: yellow;
-      width: fit-content;
-      padding: 24px;
-      margin: 4px;
-    }
-    .title, .content{
-      font-size: 2rem;
-    }
-  </style>
+  <link rel='stylesheet' href='style.css' />
   <title>localStorage</title>
 </head>
 <body>
-<div>
-<button onclick="deleteAll()" class="btn btn-red">DELET ALL</button>
-</div>
+<div class="container">
 
-<input id="title" type="text" placeholder="enter title">
-<input id="content" type="text" placeholder="enter content">
 
-<button class="btn btn-green" id="add">Add</button>
+
+<header>
+<button onclick="deleteAll()" class="btn btn-red">DELETE ALL</button>
+<button onclick="handleToggleForm()" id="toggleForm" class="btn btn-dark">ADD NOTE</button>
+</header>
+
+<form>
+  <input id="title" type="text" placeholder="Enter Title">
+  <textarea id="content" type="text" placeholder="Enter Content"></textarea>
+  
+  <button class="btn btn-green" id="add">Add</button>
+</form>
+
 
 <!--  -->
 <!--  -->
@@ -57,87 +38,10 @@
 <!--  -->
 <!--  -->
 
+<!-- \container -->
+</div>
+
+<script src='app.js'></script>
 </body>
 </html>
-
-<script>
-function createElementWithClass(tagName, classes) {
-  const el = document.createElement(tagName);
-  el.setAttribute('class', classes);
-
-  return el;
-}
-function createItem(title, content, id) {
-  const elGroup = createElementWithClass('div', 'group');
-
-  const elTitle = createElementWithClass('p', 'title');
-  const elContent = createElementWithClass('p', 'content');
-  const elDeleteBtn = createElementWithClass('button', 'btn btn-red');
-
-  elTitle.textContent = title;
-  elContent.textContent = content;
-
-  elDeleteBtn.textContent = "DELETE";
-  elDeleteBtn.setAttribute('id', id);
-  elDeleteBtn.onclick = () => {
-    const deleteNote = confirm("Are you sure you want to DELETE this note?");
-    if(deleteNote){
-      localStorage.removeItem(id)
-      location.reload();
-    }
-  }
-
-
-  elGroup.append(elTitle, elContent, elDeleteBtn);
-  return elGroup;
-}
-
-const root = document.getElementById('root');
-
-// input els
-const title = document.getElementById('title');
-const content = document.getElementById('content');
-
-const add = document.getElementById('add');
-
-add.onclick = () => {
-  let key = title.value;
-  let value = content.value;
-
-  const obj = {
-    title: key,
-    content: value
-  }
-  let id = Math.random(0,1);
-
-  if(key){
-    localStorage.setItem(id, JSON.stringify(obj));
-    location.reload();
-  }
-
-  title.value = "";
-  content.value = "";
-}
-
-for(let i = 0; i < localStorage.length; i++){
-  const id = localStorage.key(i);
-  const note = JSON.parse(localStorage.getItem(id));
-  const title = note.title;
-  const content = note.content;
-
-  root.appendChild(createItem(title, content, id))
-
-}
-
-
-function deleteAll(){
-  const deleteAllNotes = confirm("Are you sure you want to DELETE ALL NOTES?");
-  if(deleteAllNotes){
-    localStorage.clear(); 
-    location.reload();
-  }
-}
-
-</script>
-
 
