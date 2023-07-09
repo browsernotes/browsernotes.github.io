@@ -80,17 +80,39 @@ add.onclick = () => {
   content.value = "";
 }
 
-for(let i = 0; i < localStorage.length; i++){
-  
-  const id = localStorage.key(i);
-  
+
+// Retrieve all keys from localStorage
+const keys = Object.keys(localStorage);
+
+// Sort the keys based on the titles
+keys.sort((a, b) => {
+  const noteA = JSON.parse(localStorage.getItem(a));
+  const noteB = JSON.parse(localStorage.getItem(b));
+  const titleA = noteA.title.toLowerCase();
+  const titleB = noteB.title.toLowerCase();
+
+  if (titleA < titleB) {
+    return -1; // titleA comes before titleB
+  }
+  if (titleA > titleB) {
+    return 1; // titleA comes after titleB
+  }
+  return 0; // titles are equal
+});
+
+// Iterate over sorted keys and render the data
+for (let i = 0; i < keys.length; i++) {
+  const id = keys[i];
+
+  // Retrieve note data
   const note = JSON.parse(localStorage.getItem(id));
   const title = note.title;
   const content = note.content;
-  
-  root.appendChild(createItem(title, content, id))
 
+  // Append the sorted note data to the DOM
+  root.appendChild(createItem(title, content, id));
 }
+
 
 
 function deleteAll(){
