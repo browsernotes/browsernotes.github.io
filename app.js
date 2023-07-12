@@ -21,15 +21,20 @@ function encodeHTML(s){
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 }
 
+
+
+
 function createElementWithClass(tagName, classes) {
   const el = document.createElement(tagName);
   el.setAttribute('class', classes);
 
   return el;
 }
-function createItem(title, content, id) {
-  const elGroup = createElementWithClass('div', 'group');
 
+
+function createItem(title, content, id) {
+  const elGroup = createElementWithClass('div', 'group note-item');
+  
   const elTitle = createElementWithClass('p', 'title');
   const elContent = createElementWithClass('p', 'content');
   const elDeleteBtn = createElementWithClass('button', 'btn note-delete');
@@ -39,17 +44,37 @@ function createItem(title, content, id) {
 
   elDeleteBtn.textContent = "DELETE";
   elDeleteBtn.setAttribute('id', id);
-  elDeleteBtn.onclick = () => {
+  elDeleteBtn.addEventListener('click', () => {
     const deleteNote = confirm("Are you sure you want to DELETE this note?");
-    if(deleteNote){
-      localStorage.removeItem(id)
+    if (deleteNote) {
+      localStorage.removeItem(id);
       location.reload();
     }
-  }
+  });
+
+  let isToggled = false;
 
   elGroup.append(elTitle, elContent, elDeleteBtn);
+  
+   elGroup.addEventListener('click', () => {
+    const allNoteElements = document.querySelectorAll('.note-item');
+    allNoteElements.forEach((element) => {
+      const titleElement = element.querySelector('.title');
+
+      if (titleElement.textContent !== elTitle.textContent) {
+        if(isToggled) {
+          element.style.backgroundColor = 'lightgray';
+        } else {
+          element.style.backgroundColor = '';
+        }
+      }
+    });
+    isToggled = !isToggled;
+  });
+
   return elGroup;
 }
+
 
 const root = document.getElementById('root');
 
@@ -112,6 +137,9 @@ for (let i = 0; i < keys.length; i++) {
   // Append the sorted note data to the DOM
   root.appendChild(createItem(title, content, id));
 }
+
+
+
 
 
 
