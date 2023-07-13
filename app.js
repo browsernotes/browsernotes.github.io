@@ -22,8 +22,6 @@ function encodeHTML(s){
 }
 
 
-
-
 function createElementWithClass(tagName, classes) {
   const el = document.createElement(tagName);
   el.setAttribute('class', classes);
@@ -32,16 +30,31 @@ function createElementWithClass(tagName, classes) {
 }
 
 
+// Create Note Item 
 function createItem(title, content, id) {
   const elGroup = createElementWithClass('div', 'group note-item');
-  
+
   const elTitle = createElementWithClass('p', 'title');
   const elContent = createElementWithClass('p', 'content');
+
+  const elEditBtn = createElementWithClass('button', 'btn note-edit');
   const elDeleteBtn = createElementWithClass('button', 'btn note-delete');
 
   elTitle.textContent = encodeHTML(title);
   elContent.textContent = encodeHTML(content);
+  
+  elEditBtn.textContent = "EDIT";
+  elEditBtn.addEventListener('click', () => {
+    
+    const elModal = document.querySelector(`#modal-${id}`);
 
+    if (elModal.style.display === 'block') {
+      elModal.style.display = 'none';
+    } else {
+      elModal.style.display = 'block';
+    }
+  });
+  
   elDeleteBtn.textContent = "DELETE";
   elDeleteBtn.setAttribute('id', id);
   elDeleteBtn.addEventListener('click', () => {
@@ -52,33 +65,87 @@ function createItem(title, content, id) {
     }
   });
 
-  let isToggled = false;
 
-  elGroup.append(elTitle, elContent, elDeleteBtn);
+// Create Edit Modal
+function createModal(content, onSave, id) {
+  const elModal = createElementWithClass('div', 'modal');
+  const elModalContent = createElementWithClass('div', 'modal-content');
+  const elModalClose = createElementWithClass('span', 'modal-close');
+  const elModalTitle = createElementWithClass('h2', 'modal-title');
+  const elModalTextarea = createElementWithClass('textarea', 'modal-textarea');
+  const elModalSubmit = createElementWithClass('button', 'btn btn-green modal-submit');
+
+  elModalTextarea.value = content;
+  elModalSubmit.textContent = 'Submit';
+
+  elModalClose.addEventListener('click', () => {
+    elModal.style.display = 'none';
+  });
+
+  // Update note with new edited content
+  elModalSubmit.addEventListener('click', () => {
+  const updatedContent = elModalTextarea.value;
   
-   elGroup.addEventListener('click', () => {
+  onSave(updatedContent);
+  localStorage.setItem(id, JSON.stringify({title, content: encodeHTML(updatedContent) }));
+  elModal.style.display = 'none';
+});
+
+
+  elModalContent.append(elModalClose, elModalTitle, elModalTextarea, elModalSubmit);
+  elModal.append(elModalContent);
+
+
+   elGroup.addEventListener('click', (event) => {
+  // Check if the clicked element or its ancestors have the .modal-textarea class
+  if (!event.target.closest('.note-edit') && !event.target.closest('.modal-content')) {
     const allNoteElements = document.querySelectorAll('.note-item');
     allNoteElements.forEach((element) => {
       const titleElement = element.querySelector('.title');
 
       if (titleElement.textContent !== elTitle.textContent) {
-        if(isToggled) {
-          element.style.backgroundColor = 'lightgray';
-        } else {
-          element.style.backgroundColor = '';
-        }
+        element.style.backgroundColor = '#cccccc';
+      } else {
+        element.style.backgroundColor = '';
       }
     });
-    isToggled = !isToggled;
-  });
+  }
+});
+
+
+  return elModal;
+}
+
+
+const elModal = createModal(content, (updatedContent) => {
+  elContent.textContent = encodeHTML(updatedContent);
+  // const noteData = JSON.parse(localStorage.getItem(id));
+  // noteData.content = updatedContent;
+  localStorage.setItem(id, JSON.stringify({ title, content: updatedContent }));
+  elModal.style.display = 'none';
+}, id);
+
+  elModal.setAttribute('id', `modal-${id}`);
+
+  elGroup.append(elTitle, elContent, elEditBtn, elDeleteBtn, elModal);
 
   return elGroup;
 }
 
+// Reset note highlight by clicking anywhere outside of any notes
+document.addEventListener('click', (event) => {
+  if (!event.target.closest('.note-item')) {
+    const allNoteElements = document.querySelectorAll('.note-item');
+    allNoteElements.forEach((element) => {
+      element.style.backgroundColor = '';
+    });
+  }
+});
+
 
 const root = document.getElementById('root');
 
-// input els
+// form input elements
 const title = document.getElementById('title');
 const content = document.getElementById('content');
 
@@ -105,6 +172,7 @@ add.onclick = () => {
   content.value = "";
 }
 
+// console.log(localStorage);
 
 // Retrieve all keys from localStorage
 const keys = Object.keys(localStorage);
@@ -124,6 +192,7 @@ keys.sort((a, b) => {
   }
   return 0; // titles are equal
 });
+
 
 // Iterate over sorted keys and render the data
 for (let i = 0; i < keys.length; i++) {

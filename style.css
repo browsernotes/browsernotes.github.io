@@ -118,6 +118,18 @@ textarea {
 .content{
   margin-bottom: 20px;
 }
+.note-edit{
+  position: absolute;
+  top: 0px;
+  left: 0;
+  min-width: fit-content!important;
+  padding: 4px!important;
+  border-radius: 5px;
+  font-size: .7rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: #f7f7f7
+}
 .note-delete{
   position: absolute;
   bottom: -5px;
@@ -131,3 +143,32 @@ textarea {
   background-color: #f7f7f7
 }
 
+.note-item {
+  display: block; /* Show the modal for the clicked note */
+}
+
+.modal {
+  display: none; /* Initially hide the modal */
+  /* Add other styles for the modal container */
+}
+
+.modal-textarea {
+  /* Add styles for the textarea element */
+  width: 100%;
+}
+
+.modal-submit {
+  margin-top: 5px;
+}
+
+/* 
+.modal-content {  
+}
+
+.modal-close {
+
+}
+
+.modal-title {
+}
+ */
