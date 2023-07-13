@@ -120,8 +120,9 @@ textarea {
 }
 .note-edit{
   position: absolute;
-  top: 0px;
-  left: 0;
+  top: -1px;
+  padding-top: 2px;
+  left: -1px;
   min-width: fit-content!important;
   padding: 4px!important;
   border-radius: 5px;
@@ -133,7 +134,7 @@ textarea {
 .note-delete{
   position: absolute;
   bottom: -5px;
-  right: 0;
+  right: -1px;
   min-width: fit-content!important;
   padding: 4px!important;
   border-radius: 5px;

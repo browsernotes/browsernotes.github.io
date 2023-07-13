@@ -76,7 +76,7 @@ function createModal(content, onSave, id) {
   const elModalSubmit = createElementWithClass('button', 'btn btn-green modal-submit');
 
   elModalTextarea.value = content;
-  elModalSubmit.textContent = 'Submit';
+  elModalSubmit.textContent = 'UPDATE';
 
   elModalClose.addEventListener('click', () => {
     elModal.style.display = 'none';
