@@ -173,3 +173,18 @@ textarea {
 .modal-title {
 }
  */
+
+.github {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+.github p{
+  font-size: 12px;
+  font-family: monospace;
+  padding-bottom: 10px;
+}
+.github img{
+  width: 35px;
+  height: auto;
+}
