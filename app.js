@@ -205,11 +205,37 @@ add.onclick = () => {
 
 // console.log(localStorage);
 
+if (!localStorage.getItem('notesLoaded')) {
+// Populate with instructions localStorage on first load
+  const defaultTitles = ["DELETE ALL (button above)", "monday click a note to highlight", "notes remain", "notes are cool", "i just had an idea", "monday", "your data on your machine", "label with days of week", "ideal for a quick thought", "use the same title", "so simple", "notes are shown in alphabetical order", "not online in the cloud"];
+
+  const defaultContents = ["ADD YOUR FIRST NOTE!", "match any other note with same day of week or same title", "until you clear your brower storage", "in my browser", "and here it is...", "highlight match for quick day tasks", "under your control, at all times", "to group notes together", "or for organisation", "and notes will be grouped", "so useful", "for quick reference", "by a third party"];
+
+  const defaultIds = ["id0", "id1", "id2", "id3", "id4", "id5", "id6", "id7", "id8", "id9", "id10", "id11", "id12"];
+
+  // Iterate over the arrays and save the default notes to localStorage
+  for (let i = 0; i < defaultTitles.length; i++) {
+    const title = defaultTitles[i];
+    const content = defaultContents[i];
+    const id = defaultIds[i];
+
+    localStorage.setItem(id, JSON.stringify({ title, content }));
+  }
+
+  // Set a flag in localStorage to indicate that the default notes have been loaded
+  localStorage.setItem('notesLoaded', 'true');
+}
+
+
+
 // Retrieve all keys from localStorage
 const keys = Object.keys(localStorage);
 
-// Sort the keys based on the titles (alphabetically)
-keys.sort((a, b) => {
+// Filter out the 'notesLoaded' key and keys with value 'true'
+const filteredKeys = keys.filter((key) => key !== 'notesLoaded' && localStorage.getItem(key) !== 'true');
+
+// Sort the filtered keys based on the titles (alphabetically)
+filteredKeys.sort((a, b) => {
   const noteA = JSON.parse(localStorage.getItem(a));
   const noteB = JSON.parse(localStorage.getItem(b));
   const titleA = noteA.title.toLowerCase();
@@ -224,20 +250,15 @@ keys.sort((a, b) => {
   return 0; // titles are equal
 });
 
-
-// Iterate over sorted keys and render the data
-for (let i = 0; i < keys.length; i++) {
-  const id = keys[i];
-
-  // Retrieve note data
+// Iterate over the sorted keys and render the data
+for (let i = 0; i < filteredKeys.length; i++) {
+  const id = filteredKeys[i];
   const note = JSON.parse(localStorage.getItem(id));
   const title = note.title;
   const content = note.content;
 
-  // Append the sorted note data to the DOM
   root.appendChild(createItem(title, content, id));
 }
-
 
 
 
@@ -246,10 +267,14 @@ for (let i = 0; i < keys.length; i++) {
 function deleteAll(){
   const deleteAllNotes = confirm("Are you sure you want to DELETE ALL NOTES?");
   if(deleteAllNotes){
-    localStorage.clear(); 
+    localStorage.clear();
+    localStorage.removeItem('notesLoaded'); 
+    localStorage.setItem('notesLoaded', 'false');
     location.reload();
   }
 }
+
+
 
 let size;
 function changeFontSize(delta) {
