@@ -92,7 +92,13 @@ button#add{
 button{
   cursor: pointer;
 }
-/* add new note button */
+/* add new note submit*/
+.btn-add-note{
+  background-color: #84edb2;
+  color: black;
+  font-weight: bold;
+}
+/* add note / open form button */
 .btn-new{
   background-color: #b353fc;
   color: white;
