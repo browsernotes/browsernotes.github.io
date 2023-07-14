@@ -17,6 +17,7 @@
 - Notes with titles beginning with days of the week (Monday, Tuesday etc) will be highlighted.
 
 ![preview](/preview.png)
+![colour palette](/palette.png)
 
 ```
 Todo: Persist font size change after reload.

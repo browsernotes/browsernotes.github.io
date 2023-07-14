@@ -17,7 +17,7 @@ body{
 
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  background-color: #f7f7f7;
+  background-color: #202123;
   padding: 5px 0 12px;
   font-family: "Open Sans", sans-serif;
   scrollbar-width: thin; /* For Firefox */
@@ -92,6 +92,16 @@ button#add{
 button{
   cursor: pointer;
 }
+/* add new note button */
+.btn-new{
+  background-color: #b353fc;
+  color: white;
+}
+/* delete all button */
+.btn-delete{
+  background-color: #e8665a;
+  color: #fff;
+}
 /* fix IOS rounding issue */
 textarea,
 input[type="text"],
@@ -123,35 +133,28 @@ textarea {
   display: flex;
   flex-wrap: wrap;
 }
-/* note */
+/* NOTE */
 .group{
   position: relative;
-  background-color: #FFFF1999;
+  /* background-color: #FEFD00; */
+  background-color: #fffaaf;
+  /* background-color: #fffae6; */
   width: fit-content;
   padding: 24px;
   margin: 4px;
   border-radius: 10px; /* 40px */
-}
-/* add texture */
-.group::before{
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('/paper-texture.png');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.5; /* Opacity for the background image */
-  z-index: -1;
+  border: 1px solid #ffaaaf;
 }
 .title, .content{
   font-size: 36px;
-  line-height: 3.7rem;
+  /* line-height: 3.7rem; */
+}
+.title{
+  margin-top: 6px;
+  font-weight: bold;
 }
 .content{
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .note-edit{
   position: absolute;
@@ -160,11 +163,13 @@ textarea {
   left: -1px;
   min-width: fit-content!important;
   padding: 4px!important;
-  border-radius: 5px;
+  border-top-left-radius: 5px;
   font-size: .7rem;
   font-weight: bold;
   letter-spacing: 1px;
-  background-color: #f7f7f7
+  /* background-color: #f7f7f7; */
+  background-color: #84edb2;
+  color: white;
 }
 .note-delete{
   position: absolute;
@@ -172,11 +177,13 @@ textarea {
   right: -1px;
   min-width: fit-content!important;
   padding: 4px!important;
-  border-radius: 5px;
+  border-bottom-right-radius: 5px;
   font-size: .7rem;
   font-weight: bold;
   letter-spacing: 1px;
-  background-color: #f7f7f7
+  /* background-color: #f7f7f7; */
+  background-color: #e8665a;
+  color: white;
 }
 
 .note-item {
@@ -214,7 +221,7 @@ textarea {
   margin: 40px 0 80px;
 }
 .github img{
-  /* filter: invert(); */
+  filter: invert();
   width: 35px;
   height: auto;
 }

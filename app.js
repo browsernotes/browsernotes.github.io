@@ -135,9 +135,9 @@ function createModal(content, onSave, id) {
       }
 
       if (isMatch || titleElement.textContent.toLowerCase() === elTitle.textContent.toLowerCase()) {
-        element.style.backgroundColor = '';
+        element.style.backgroundColor = '#fefd00';
       } else {
-        element.style.backgroundColor = '#cccccc';
+        element.style.backgroundColor = '#fffae6';
       }
 
     });
