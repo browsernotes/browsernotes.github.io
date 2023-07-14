@@ -50,8 +50,10 @@ function createItem(title, content, id) {
 
     if (elModal.style.display === 'block') {
       elModal.style.display = 'none';
+      elEditBtn.textContent = "EDIT"
     } else {
       elModal.style.display = 'block';
+      elEditBtn.textContent = "ABORT"
     }
   });
   
@@ -71,43 +73,73 @@ function createModal(content, onSave, id) {
   const elModal = createElementWithClass('div', 'modal');
   const elModalContent = createElementWithClass('div', 'modal-content');
   const elModalClose = createElementWithClass('span', 'modal-close');
-  const elModalTitle = createElementWithClass('h2', 'modal-title');
+  const elModalTitle = createElementWithClass('input', 'modal-title');
   const elModalTextarea = createElementWithClass('textarea', 'modal-textarea');
   const elModalSubmit = createElementWithClass('button', 'btn btn-green modal-submit');
 
-  elModalTextarea.value = content;
+  elModalTitle.value = title; // Set initial value for the title input
+  elModalTextarea.value = content; // Set initial value for the content textarea
   elModalSubmit.textContent = 'UPDATE';
 
   elModalClose.addEventListener('click', () => {
     elModal.style.display = 'none';
   });
 
-  // Update note with new edited content
+  // Update note with new edited title or content
   elModalSubmit.addEventListener('click', () => {
-  const updatedContent = elModalTextarea.value;
-  
-  onSave(updatedContent);
-  localStorage.setItem(id, JSON.stringify({title, content: encodeHTML(updatedContent) }));
-  elModal.style.display = 'none';
-});
+    const updatedTitle = elModalTitle.value; // Get the updated title from the input
+    const updatedContent = elModalTextarea.value; // Get the updated content from the textarea
+    elEditBtn.textContent = "EDIT"
+    onSave(updatedContent);
+    
+    // Update the title textContent
+    elTitle.textContent = encodeHTML(updatedTitle);
 
+    localStorage.setItem(id, JSON.stringify({ title: updatedTitle, content: encodeHTML(updatedContent) }));
+    elModal.style.display = 'none';
+  });
 
   elModalContent.append(elModalClose, elModalTitle, elModalTextarea, elModalSubmit);
   elModal.append(elModalContent);
 
-
+  // Note highlight group by title
    elGroup.addEventListener('click', (event) => {
-  // Check if the clicked element or its ancestors have the .modal-textarea class
-  if (!event.target.closest('.note-edit') && !event.target.closest('.modal-content')) {
+
+  if (!event.target.closest('.note-edit') && !event.target.closest('.note-delete') && !event.target.closest('.modal-content')) {
     const allNoteElements = document.querySelectorAll('.note-item');
     allNoteElements.forEach((element) => {
       const titleElement = element.querySelector('.title');
 
-      if (titleElement.textContent !== elTitle.textContent) {
-        element.style.backgroundColor = '#cccccc';
-      } else {
-        element.style.backgroundColor = '';
+      // Title is exact match or first word in title is same day of the week
+      const titleWords = titleElement.textContent.split(' ');
+      const elTitleWords = elTitle.textContent.split(' ');
+
+      const firstWord = titleWords[0].toLowerCase();
+      const elFirstWord = elTitleWords[0].toLowerCase();
+
+      const daysOfWeek = [
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday',
+      ];
+
+      let isMatch = false;
+
+      // Check if the first word of titleElement is a day of the week and matches the first word of elTitle
+      if (daysOfWeek.includes(firstWord) && firstWord === elFirstWord) {
+        isMatch = true;
       }
+
+      if (isMatch || titleElement.textContent.toLowerCase() === elTitle.textContent.toLowerCase()) {
+        element.style.backgroundColor = '';
+      } else {
+        element.style.backgroundColor = '#cccccc';
+      }
+
     });
   }
 });
@@ -119,18 +151,17 @@ function createModal(content, onSave, id) {
 
 const elModal = createModal(content, (updatedContent) => {
   elContent.textContent = encodeHTML(updatedContent);
-  // const noteData = JSON.parse(localStorage.getItem(id));
-  // noteData.content = updatedContent;
   localStorage.setItem(id, JSON.stringify({ title, content: updatedContent }));
   elModal.style.display = 'none';
 }, id);
 
-  elModal.setAttribute('id', `modal-${id}`);
+elModal.setAttribute('id', `modal-${id}`);
 
-  elGroup.append(elTitle, elContent, elEditBtn, elDeleteBtn, elModal);
+elGroup.append(elTitle, elContent, elEditBtn, elDeleteBtn, elModal);
 
-  return elGroup;
+return elGroup;
 }
+
 
 // Reset note highlight by clicking anywhere outside of any notes
 document.addEventListener('click', (event) => {
@@ -177,7 +208,7 @@ add.onclick = () => {
 // Retrieve all keys from localStorage
 const keys = Object.keys(localStorage);
 
-// Sort the keys based on the titles
+// Sort the keys based on the titles (alphabetically)
 keys.sort((a, b) => {
   const noteA = JSON.parse(localStorage.getItem(a));
   const noteB = JSON.parse(localStorage.getItem(b));

@@ -5,24 +5,43 @@
   margin: 0;
   padding: 0;
 }
+html, body {
+  height: 100%;
+}
 body{
   -webkit-touch-callout: none; /* Disable iOS long press */
   -webkit-user-select: none; /* Chrome/Safari/Opera */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, supported by most modern browsers */
-  
+
+  -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   background-color: #f7f7f7;
   padding: 5px 0 12px;
   font-family: "Open Sans", sans-serif;
+  scrollbar-width: thin; /* For Firefox */
+}
+body::-webkit-scrollbar {
+  width: 0.5em;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0);
 }
 body::selection {
   background-color: yellow;
 }
 
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  min-height: 98vh;
+  overflow-y: auto;
+  justify-content: space-between;
+}
 .container{
   /* max-width: 1140px; */
+  flex: 1;
   width: 100%;
   margin: 0 auto 1%;
 }
@@ -62,7 +81,9 @@ form{
   display: flex;
 }
 input, textarea{
+  font-family: "Open Sans", sans-serif;
   padding: 10px; 
+  font-size: 24px;
 }
 button#add{
   border-top-left-radius: 0;
@@ -88,12 +109,11 @@ input, button{
   margin: 0 0 4px;
   border: 0px solid transparent;
 }
-input:focus {
+input:focus, textarea:focus {
   outline: none;
 }
 textarea::placeholder, input::placeholder, textarea:focus::placeholder, input:focus::placeholder {
   color: #ccc;
-  font-family: sans-serif;
 }
 textarea {
   height: 200px;
@@ -103,16 +123,31 @@ textarea {
   display: flex;
   flex-wrap: wrap;
 }
+/* note */
 .group{
   position: relative;
-  background-color: yellow;
+  background-color: #FFFF1999;
   width: fit-content;
   padding: 24px;
   margin: 4px;
   border-radius: 10px; /* 40px */
 }
+/* add texture */
+.group::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/paper-texture.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5; /* Opacity for the background image */
+  z-index: -1;
+}
 .title, .content{
-  font-size: 48px;
+  font-size: 36px;
   line-height: 3.7rem;
 }
 .content{
@@ -175,17 +210,17 @@ textarea {
  */
 
 .github {
-  filter: invert();
-  position: absolute;
-  top: 2px;
-  left: 2px;
-}
-.github p{
-  font-size: 12px;
-  font-family: monospace;
-  padding-bottom: 10px;
+  align-self: center;
+  margin: 40px 0 80px;
 }
 .github img{
+  /* filter: invert(); */
   width: 35px;
   height: auto;
+}
+
+@media (min-width: 769px){
+  .github {
+    margin: 40px 0px 0px;
+  }
 }
