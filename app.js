@@ -111,11 +111,8 @@ function createModal(content, onSave, id) {
     allNoteElements.forEach((element) => {
       const titleElement = element.querySelector('.title');
 
-      const titleWords = titleElement.textContent.toLowerCase().split(' ');
-      const elTitleWords = elTitle.textContent.toLowerCase().split(' ');
-
-      const firstWord = titleWords[0].toLowerCase();
-      const elFirstWord = elTitleWords[0].toLowerCase();
+      const title = titleElement.textContent.toLowerCase();
+      const elTitleString = elTitle.textContent.toLowerCase();
 
       const daysOfWeek = [
         'monday',
@@ -129,15 +126,12 @@ function createModal(content, onSave, id) {
 
       let isMatch = false;
 
-      // if (titleWords.includes(firstWord) && firstWord === elFirstWord) {
-      //   isMatch = true;
-      // }
-
-      if (titleWords.includes(firstWord) && firstWord === elFirstWord) {
+      if (title === elTitleString) {
         isMatch = true;
       } else {
         for (let i = 0; i < daysOfWeek.length; i++) {
-          if (titleWords.includes(daysOfWeek[i]) && elTitleWords.includes(daysOfWeek[i])) {
+          
+          if (title.includes(daysOfWeek[i]) && elTitleString.includes(daysOfWeek[i])) {
             isMatch = true;
             break;
           }
