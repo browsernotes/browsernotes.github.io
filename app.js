@@ -211,9 +211,9 @@ add.onclick = () => {
 
 if (!localStorage.getItem('notesLoaded')) {
 // Populate with instructions localStorage on first load
-  const defaultTitles = ["DELETE ALL (button above)", "monday click a note to highlight", "notes remain", "notes are cool", "i just had an idea", "monday", "your data on your machine", "label with days of week", "ideal for a quick thought", "use the same title", "so simple", "notes are shown in alphabetical order", "not online in the cloud"];
+  const defaultTitles = ["DELETE ALL (button above)", "monday - click a note to highlight", "notes remain", "notes are cool", "i just had an idea", "monday", "your data on your machine", "label with days of week", "ideal for a quick thought", "no device sync", "so simple", "notes are shown in alphabetical order", "not stored online in the cloud"];
 
-  const defaultContents = ["ADD YOUR FIRST NOTE!", "match any other note with same day of week or same title", "until you clear your brower storage", "in my browser", "and here it is...", "highlight match for quick day tasks", "under your control, at all times", "to group notes together", "or for organisation", "and notes will be grouped", "so useful", "for quick reference", "by a third party"];
+  const defaultContents = ["ADD YOUR FIRST NOTE!", "match any other note with same day of week or same title", "until you clear your brower storage", "in my browser", "and here it is...", "highlight match for quick day tasks", "under your control, at all times", "to group notes together", "or for organisation", "for maximum privacy", "so useful", "for quick reference", "by a third party"];
 
   const defaultIds = ["id0", "id1", "id2", "id3", "id4", "id5", "id6", "id7", "id8", "id9", "id10", "id11", "id12"];
 
