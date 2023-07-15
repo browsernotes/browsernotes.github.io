@@ -91,6 +91,7 @@ function createModal(content, onSave, id) {
     const updatedContent = elModalTextarea.value; // Get the updated content from the textarea
     elEditBtn.textContent = "EDIT"
     onSave(updatedContent);
+    location.reload();
     
     // Update the title textContent
     elTitle.textContent = encodeHTML(updatedTitle);
@@ -110,7 +111,6 @@ function createModal(content, onSave, id) {
     allNoteElements.forEach((element) => {
       const titleElement = element.querySelector('.title');
 
-      // Title is exact match or first word in title is same day of the week
       const titleWords = titleElement.textContent.split(' ');
       const elTitleWords = elTitle.textContent.split(' ');
 
@@ -129,17 +129,27 @@ function createModal(content, onSave, id) {
 
       let isMatch = false;
 
-      // Check if the first word of titleElement is a day of the week and matches the first word of elTitle
-      if (daysOfWeek.includes(firstWord) && firstWord === elFirstWord) {
+      // if (titleWords.includes(firstWord) && firstWord === elFirstWord) {
+      //   isMatch = true;
+      // }
+
+      if (titleWords.includes(firstWord) && firstWord === elFirstWord) {
         isMatch = true;
+      } else {
+        for (let i = 0; i < daysOfWeek.length; i++) {
+          if (titleWords.includes(daysOfWeek[i]) && elTitleWords.includes(daysOfWeek[i])) {
+            isMatch = true;
+            break;
+          }
+        }
       }
 
-      if (isMatch || titleElement.textContent.toLowerCase() === elTitle.textContent.toLowerCase()) {
+      if (isMatch) {
         element.style.backgroundColor = '#fefd00';
       } else {
         element.style.backgroundColor = '#fffae6';
       }
-
+      
     });
   }
 });
