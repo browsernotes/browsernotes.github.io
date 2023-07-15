@@ -111,8 +111,8 @@ function createModal(content, onSave, id) {
     allNoteElements.forEach((element) => {
       const titleElement = element.querySelector('.title');
 
-      const titleWords = titleElement.textContent.split(' ');
-      const elTitleWords = elTitle.textContent.split(' ');
+      const titleWords = titleElement.textContent.toLowerCase().split(' ');
+      const elTitleWords = elTitle.textContent.toLowerCase().split(' ');
 
       const firstWord = titleWords[0].toLowerCase();
       const elFirstWord = elTitleWords[0].toLowerCase();
