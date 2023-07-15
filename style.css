@@ -92,12 +92,6 @@ button#add{
 button{
   cursor: pointer;
 }
-/* add new note submit*/
-.btn-add-note{
-  background-color: #84edb2;
-  color: black;
-  font-weight: bold;
-}
 /* add note / open form button */
 .btn-new{
   background-color: #b353fc;
@@ -107,6 +101,17 @@ button{
 .btn-delete{
   background-color: #e8665a;
   color: #fff;
+}
+/* add new note submit*/
+.btn-add-note{
+  background-color: #84edb2;
+  color: black;
+  font-weight: bold;
+}
+/* submit edit button */
+.btn-edit-note{
+  background-color: #84edb2;
+  color: white;
 }
 /* fix IOS rounding issue */
 textarea,

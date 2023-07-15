@@ -75,7 +75,7 @@ function createModal(content, onSave, id) {
   const elModalClose = createElementWithClass('span', 'modal-close');
   const elModalTitle = createElementWithClass('input', 'modal-title');
   const elModalTextarea = createElementWithClass('textarea', 'modal-textarea');
-  const elModalSubmit = createElementWithClass('button', 'btn btn-green modal-submit');
+  const elModalSubmit = createElementWithClass('button', 'btn btn-edit-note modal-submit');
 
   elModalTitle.value = title; // Set initial value for the title input
   elModalTextarea.value = content; // Set initial value for the content textarea
