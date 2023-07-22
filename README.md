@@ -20,5 +20,7 @@
 ![colour palette](/palette.png)
 
 ```
-Todo: Persist font size change after reload.
+Todo: 
+- Persist font size change after reload.
+- Enhance error boundaries if note data not fetchable.
 ```

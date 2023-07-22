@@ -17,11 +17,6 @@ function handleToggleForm(){
   document.querySelector("input").focus()
 }
 
-function encodeHTML(s){
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-}
-
-
 function createElementWithClass(tagName, classes) {
   const el = document.createElement(tagName);
   el.setAttribute('class', classes);
@@ -40,8 +35,8 @@ function createItem(title, content, id) {
   const elEditBtn = createElementWithClass('button', 'btn note-edit');
   const elDeleteBtn = createElementWithClass('button', 'btn note-delete');
 
-  elTitle.textContent = encodeHTML(title);
-  elContent.textContent = encodeHTML(content);
+  elTitle.innerHTML = title;
+  elContent.innerHTML = content;
   
   elEditBtn.textContent = "EDIT";
   elEditBtn.addEventListener('click', () => {
@@ -77,8 +72,8 @@ function createModal(content, onSave, id) {
   const elModalTextarea = createElementWithClass('textarea', 'modal-textarea');
   const elModalSubmit = createElementWithClass('button', 'btn btn-edit-note modal-submit');
 
-  elModalTitle.value = title; // Set initial value for the title input
-  elModalTextarea.value = content; // Set initial value for the content textarea
+  elModalTitle.value = title;
+  elModalTextarea.value = content.replace(/<br>/g, "\n");
   elModalSubmit.textContent = 'UPDATE';
 
   elModalClose.addEventListener('click', () => {
@@ -90,13 +85,13 @@ function createModal(content, onSave, id) {
     const updatedTitle = elModalTitle.value; // Get the updated title from the input
     const updatedContent = elModalTextarea.value; // Get the updated content from the textarea
     elEditBtn.textContent = "EDIT"
-    onSave(updatedContent);
+    onSave(updatedContent.innerHTML);
     location.reload();
     
     // Update the title textContent
-    elTitle.textContent = encodeHTML(updatedTitle);
+    elTitle.innerHTML = updatedTitle;
 
-    localStorage.setItem(id, JSON.stringify({ title: updatedTitle, content: encodeHTML(updatedContent) }));
+    localStorage.setItem(id, JSON.stringify({ title: updatedTitle, content: updatedContent }));
     elModal.style.display = 'none';
   });
 
@@ -154,7 +149,7 @@ function createModal(content, onSave, id) {
 
 
 const elModal = createModal(content, (updatedContent) => {
-  elContent.textContent = encodeHTML(updatedContent);
+  elContent.innerHTML = updatedContent;
   localStorage.setItem(id, JSON.stringify({ title, content: updatedContent }));
   elModal.style.display = 'none';
 }, id);
@@ -191,11 +186,10 @@ add.onclick = () => {
   const obj = {
     title: title.value,
     content: content.value
-  }
+  };
 
   let d = new Date();
   let timestamp = d.getTime();
-  // let id = Math.random(0,1);
 
   if(obj.title) {
     localStorage.setItem(JSON.stringify(timestamp), JSON.stringify(obj));
@@ -258,8 +252,8 @@ filteredKeys.sort((a, b) => {
 for (let i = 0; i < filteredKeys.length; i++) {
   const id = filteredKeys[i];
   const note = JSON.parse(localStorage.getItem(id));
-  const title = note.title;
-  const content = note.content;
+  const title = note.title.replace(/\n/g, "<br>");
+  const content = note.content.replace(/\n/g, "<br>");
 
   root.appendChild(createItem(title, content, id));
 }
@@ -290,7 +284,7 @@ function changeFontSize(delta) {
     if (size) {
       size = parseInt(tags[i].style.fontSize.replace("px", ""));
     } else {
-      size = 48; // onload size
+      size = 48; // onload font size
     } if (size > 53) {
       increaseFontSizeBtn.disabled = true;
       size = 52;
