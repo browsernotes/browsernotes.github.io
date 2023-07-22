@@ -13,8 +13,9 @@
 - Increase/Decrease note font size
 
 `Organisational Features:`
-- Click notes to highlight only notes with matching titles.
-- Notes with titles beginning with days of the week (Monday, Tuesday etc) will be highlighted.
+- Click notes to highlight only notes with exact matching titles.
+- Notes with titles beginning with days of the week (Monday, Tuesday etc) will be grouped and highlighted.
+- Notes accept HTML tags such as `<i></i>`, italic `<b></b>`, bold etc.
 
 ![preview](/preview.png)
 ![colour palette](/palette.png)
