@@ -9,12 +9,6 @@ html, body {
   height: 100%;
 }
 body{
-  -webkit-touch-callout: none; /* Disable iOS long press */
-  -webkit-user-select: none; /* Chrome/Safari/Opera */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, supported by most modern browsers */
-
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   background-color: #202123;
