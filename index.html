@@ -11,6 +11,7 @@
   <title>Browser Notes</title>
 </head>
 <body>
+
 <div class="wrapper">
 <div class="container">
 
@@ -24,6 +25,8 @@
 </div>
 
   <button onclick="handleToggleForm()" id="toggleForm" class="btn btn-new">ADD NOTE</button>
+
+<button class="btn-download" id="downloadButton">DOWNLOAD NOTES</button>
 
 </div><!-- \header -->
 
@@ -58,6 +61,51 @@
 </div>
 <!-- \wrapper -->
 <script src='app.js'></script>
+
+<!--  -->
+<!--  -->
+<!--  -->
+<script>
+// Function to download localStorage data as a JSON file as backup for when localStorage is deleted
+    
+    function downloadBackup() {
+      const localStorageData = { ...localStorage }; // Copy localStorage data
+
+      // Convert to JSON
+      // const jsonData = JSON.stringify(localStorageData, null, 2);
+
+      // Convert to Raw Text
+      const rawText = Object.keys(localStorageData)
+        .map(key => `${key}: ${localStorageData[key]}`)
+        .join('\n');
+
+      // Create a Blob with the data
+      // const blob = new Blob([jsonData], { type: 'application/json' });
+      const blob = new Blob([rawText], { type: 'text/plain'  });
+
+      // Create a download link
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      
+      // downloadLink.download = 'localStorageBackup.json';
+      downloadLink.download = 'localStorageBackup.txt';
+
+      // Append the link to the body
+      document.body.appendChild(downloadLink);
+
+      // Trigger a click on the link to start the download
+      downloadLink.click();
+
+      // Remove the link from the body
+      document.body.removeChild(downloadLink);
+    }
+
+    // Attach click event to the download button
+    const downloadButton = document.getElementById('downloadButton');
+    downloadButton.addEventListener('click', downloadBackup);
+
+    
+  </script>
 </body>
 </html>
 

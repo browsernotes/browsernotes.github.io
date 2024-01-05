@@ -86,6 +86,13 @@ button#add{
 button{
   cursor: pointer;
 }
+.btn-download{
+  background-color: #2186de;
+  color: white;
+  margin-left: 2px;
+  padding: 8px;
+  border-radius: 4px;
+}
 /* add note / open form button */
 .btn-new{
   background-color: #b353fc;
