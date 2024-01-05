@@ -72,23 +72,23 @@
       const localStorageData = { ...localStorage }; // Copy localStorage data
 
       // Convert to JSON
-      // const jsonData = JSON.stringify(localStorageData, null, 2);
+      const jsonData = JSON.stringify(localStorageData, null, 2);
 
       // Convert to Raw Text
-      const rawText = Object.keys(localStorageData)
-        .map(key => `${key}: ${localStorageData[key]}`)
-        .join('\n');
+      // const rawText = Object.keys(localStorageData)
+      //   .map(key => `${key}: ${localStorageData[key]}`)
+      //   .join('\n');
 
       // Create a Blob with the data
-      // const blob = new Blob([jsonData], { type: 'application/json' });
-      const blob = new Blob([rawText], { type: 'text/plain'  });
+      const blob = new Blob([jsonData], { type: 'application/json' });
+      // const blob = new Blob([rawText], { type: 'text/plain'  });
 
       // Create a download link
       const downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(blob);
       
-      // downloadLink.download = 'localStorageBackup.json';
-      downloadLink.download = 'localStorageBackup.txt';
+      downloadLink.download = 'localStorageBackup.json';
+      // downloadLink.download = 'localStorageBackup.txt';
 
       // Append the link to the body
       document.body.appendChild(downloadLink);
